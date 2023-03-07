@@ -54,7 +54,7 @@ contract ReservePoolTest is RiskManagementTest {
         // approve reference token
         referenceToken.approve(address(riskManager), amount);
         // deposit into needed reserve
-        reservePool.depositIntoNeededReserve(address(creditToken), address(referenceToken), amount);
+        reservePool.deposit(address(creditToken), address(referenceToken), amount);
         // check excess reserve
         assertEq(reservePool.excessReserve(address(creditToken), address(referenceToken)), amount);
         vm.stopPrank();
@@ -72,7 +72,7 @@ contract ReservePoolTest is RiskManagementTest {
         // approve reference token
         referenceToken.approve(address(riskManager), amount);
         // deposit into needed reserve
-        reservePool.depositIntoNeededReserve(address(creditToken), address(referenceToken), amount);
+        reservePool.deposit(address(creditToken), address(referenceToken), amount);
         assertEq(reservePool.totalReserveOf(address(creditToken), address(referenceToken)), 20);
         assertEq(reservePool.excessReserve(address(creditToken), address(referenceToken)), 80);
         vm.stopPrank();

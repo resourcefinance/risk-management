@@ -107,7 +107,7 @@ contract ReservePool is IReservePool, OwnableUpgradeable, ReentrancyGuardUpgrade
     /// @param creditToken address of the credit token.
     /// @param reserveToken address of the reserve token.
     /// @param amount amount of reserve token to deposit.
-    function depositIntoNeededReserve(address creditToken, address reserveToken, uint256 amount)
+    function deposit(address creditToken, address reserveToken, uint256 amount)
         public
         override
         nonReentrant
@@ -134,10 +134,9 @@ contract ReservePool is IReservePool, OwnableUpgradeable, ReentrancyGuardUpgrade
     /// @param creditToken address of the credit token.
     /// @param reserveToken address of the reserve token.
     /// @param amount amount reference tokens to withdraw from given credit token's excess reserve.
-    function withdrawFromExcessReserve(address creditToken, address reserveToken, uint256 amount)
+    function withdraw(address creditToken, address reserveToken, uint256 amount)
         public
         nonReentrant
-        onlyCreditToken(creditToken)
     {
         require(amount > 0, "ReservePool: Cannot withdraw 0");
         require(

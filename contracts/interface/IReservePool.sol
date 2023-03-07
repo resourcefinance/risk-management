@@ -24,8 +24,7 @@ interface IReservePool {
     /// @param creditToken address of the credit token.
     /// @param reserveToken address of the reserve token.
     /// @param amount amount of reserve token to deposit.
-    function depositIntoNeededReserve(address creditToken, address reserveToken, uint256 amount)
-        external;
+    function deposit(address creditToken, address reserveToken, uint256 amount) external;
 
     /// @notice enables caller to deposit a given reserve token into a credit token's
     /// peripheral reserve.
