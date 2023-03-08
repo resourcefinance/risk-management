@@ -3,7 +3,6 @@ pragma solidity ^0.8.0;
 
 import "forge-std/Test.sol";
 
-import "../contracts/RiskManager.sol";
 import "../contracts/ReservePool.sol";
 import "../contracts/RiskOracle.sol";
 import "./MockERC20.sol";
@@ -13,10 +12,9 @@ contract RiskManagementTest is Test {
     address bob;
     address deployer;
 
-    RiskManager public riskManager;
     ReservePool public reservePool;
     RiskOracle public riskOracle;
-    MockERC20 public referenceToken;
+    MockERC20 public reserveToken;
     MockERC20 public creditToken;
 
     function setUpReSourceTest() public {
@@ -27,23 +25,21 @@ contract RiskManagementTest is Test {
         deployer = address(1);
         vm.startPrank(deployer);
 
-        // deploy riskManager
-        riskManager = new RiskManager();
-        riskManager.initialize();
-        // deploy reservePool
-        reservePool = new ReservePool();
-        reservePool.initialize(address(riskManager));
+        // deploy reserve token
+        reserveToken = new MockERC20(1000000 * (10e18), "Reference Token", "REF");
+        // deploy credit token
+        creditToken = new MockERC20(0, "Credit Token", "CRD");
         // deploy riskOracle
         riskOracle = new RiskOracle();
         riskOracle.initialize();
-        // deploy reference token
-        referenceToken = new MockERC20(1000000 * (10e18), "Reference Token", "REF");
-        // deploy credit token
-        creditToken = new MockERC20(0, "Credit Token", "CRD");
-        // set riskManager's reservePool
-        riskManager.setReservePool(address(reservePool));
-        reservePool.setTargetRTD(address(creditToken), address(referenceToken), 200000); // set targetRTD to 20%
-        reservePool.setBaseFeeRate(address(creditToken), 50000); // set base fee rate to 5%
+        // deploy riskManager
+        // deploy reservePool
+        reservePool = new ReservePool();
+        reservePool.initialize(
+            address(creditToken), address(reserveToken), deployer, address(riskOracle)
+        );
+        reservePool.setTargetRTD(20 * 10e8); // set targetRTD to 20%
+        riskOracle.setBaseFeeRate(address(reservePool), 50000); // set base fee rate to 5%
         vm.stopPrank();
     }
 }

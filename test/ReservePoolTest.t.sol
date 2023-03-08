@@ -7,7 +7,7 @@ contract ReservePoolTest is RiskManagementTest {
     function setUp() public {
         setUpReSourceTest();
         vm.startPrank(deployer);
-        referenceToken.approve(address(reservePool), type(uint256).max);
+        reserveToken.approve(address(reservePool), type(uint256).max);
         vm.stopPrank();
     }
 
@@ -16,14 +16,12 @@ contract ReservePoolTest is RiskManagementTest {
         // deposit reserve updates reserve in reserve pool
         vm.startPrank(deployer);
         uint256 amount = 100;
-        // approve reference token
-        referenceToken.approve(address(riskManager), amount);
         // deposit into primary reserve
-        reservePool.depositIntoPrimaryReserve(address(creditToken), address(referenceToken), amount);
+        reservePool.depositIntoPrimaryReserve(amount);
         // check total reserve
-        assertEq(reservePool.totalReserveOf(address(creditToken), address(referenceToken)), amount);
+        assertEq(reservePool.totalReserve(), amount);
         // check primary reserve
-        assertEq(reservePool.primaryReserve(address(creditToken), address(referenceToken)), amount);
+        assertEq(reservePool.primaryReserve(), amount);
         vm.stopPrank();
     }
 
@@ -31,18 +29,12 @@ contract ReservePoolTest is RiskManagementTest {
     function testDepositIntoPeripheralReserve() public {
         vm.startPrank(deployer);
         uint256 amount = 100;
-        // approve reference token
-        referenceToken.approve(address(riskManager), amount);
         // deposit into peripheral reserve
-        reservePool.depositIntoPeripheralReserve(
-            address(creditToken), address(referenceToken), amount
-        );
+        reservePool.depositIntoPeripheralReserve(amount);
         // check total reserve
-        assertEq(reservePool.totalReserveOf(address(creditToken), address(referenceToken)), amount);
+        assertEq(reservePool.totalReserve(), amount);
         // check peripheral reserve
-        assertEq(
-            reservePool.peripheralReserve(address(creditToken), address(referenceToken)), amount
-        );
+        assertEq(reservePool.peripheralReserve(), amount);
         vm.stopPrank();
     }
 
@@ -51,12 +43,10 @@ contract ReservePoolTest is RiskManagementTest {
         // deposit fees updates fees in reserve pool
         vm.startPrank(deployer);
         uint256 amount = 100;
-        // approve reference token
-        referenceToken.approve(address(riskManager), amount);
         // deposit into needed reserve
-        reservePool.deposit(address(creditToken), address(referenceToken), amount);
+        reservePool.deposit(amount);
         // check excess reserve
-        assertEq(reservePool.excessReserve(address(creditToken), address(referenceToken)), amount);
+        assertEq(reservePool.excessReserve(), amount);
         vm.stopPrank();
     }
 
@@ -69,20 +59,18 @@ contract ReservePoolTest is RiskManagementTest {
         vm.stopPrank();
         vm.startPrank(deployer);
         uint256 amount = 100;
-        // approve reference token
-        referenceToken.approve(address(riskManager), amount);
         // deposit into needed reserve
-        reservePool.deposit(address(creditToken), address(referenceToken), amount);
-        assertEq(reservePool.totalReserveOf(address(creditToken), address(referenceToken)), 20);
-        assertEq(reservePool.excessReserve(address(creditToken), address(referenceToken)), 80);
+        reservePool.deposit(amount);
+        assertEq(reservePool.totalReserve(), 20);
+        assertEq(reservePool.excessReserve(), 80);
         vm.stopPrank();
     }
 
     function testUpdateBaseFeeRate() public {
         // update base fee rate
         vm.startPrank(deployer);
-        reservePool.setBaseFeeRate(address(creditToken), 10000);
-        assertEq(reservePool.baseFeeRate(address(creditToken)), 10000);
+        riskOracle.setBaseFeeRate(address(reservePool), 10000);
+        assertEq(riskOracle.baseFeeRate(address(reservePool)), 10000);
         vm.stopPrank();
     }
 }
