@@ -48,4 +48,5 @@ interface IReservePool {
     event ExcessReserveWithdrawn(uint256 amount);
     event AccountReimbursed(address account, uint256 amount);
     event TargetRTDUpdated(uint256 newTargetRTD);
+    event ReserveTokenUpdated(address newReserveToken);
 }

@@ -24,7 +24,6 @@ contract ReservePool is IReservePool, OwnableUpgradeable, ReentrancyGuardUpgrade
 
     IERC20Upgradeable public creditToken;
     IERC20Upgradeable public reserveToken;
-
     uint256 public primaryReserve;
     uint256 public peripheralReserve;
     uint256 public excessReserve;
@@ -169,6 +168,11 @@ contract ReservePool is IReservePool, OwnableUpgradeable, ReentrancyGuardUpgrade
         // update target RTD
         targetRTD = _targetRTD;
         emit TargetRTDUpdated(_targetRTD);
+    }
+
+    function setReserveToken(address _reserveToken) external onlyRiskManager {
+        reserveToken = IERC20Upgradeable(_reserveToken);
+        emit ReserveTokenUpdated(_reserveToken);
     }
 
     /* ========== VIEW FUNCTIONS ========== */
