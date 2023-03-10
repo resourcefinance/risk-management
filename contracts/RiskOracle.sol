@@ -5,10 +5,14 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./interface/IRiskOracle.sol";
 
 contract RiskOracle is IRiskOracle, OwnableUpgradeable {
+    /// @dev used to specify the precision for point based calculations.
     uint256 public constant SCALING_FACTOR = 10e10;
 
+    /// @dev The base fee rate used to manipulate the total fees charged by credit networks,
+    /// depending on credit risk.
     mapping(address => uint256) public baseFeeRate;
-
+    /// @dev The conversion rate between credit currency and reference currency.
+    /// If left unset, the default conversion rate will be 1 to 1.
     mapping(address => uint256) public reserveConversionRate;
 
     function initialize() external virtual initializer {
