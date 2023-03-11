@@ -1,5 +1,7 @@
 const fs = require("fs")
 const chalk = require("chalk")
+require('dotenv').config()
+
 import "hardhat-deploy"
 import "hardhat-preprocessor"
 import "@nomiclabs/hardhat-waffle"
@@ -8,6 +10,8 @@ import "@openzeppelin/hardhat-upgrades"
 import "hardhat-gas-reporter"
 import "solidity-coverage"
 import "hardhat-contract-sizer"
+
+
 
 import { utils } from "ethers"
 
@@ -56,41 +60,10 @@ const config: HardhatUserConfig = {
       tags: ["local", "testing"],
       timeout: 100000000,
     },
-    "celo-alfajores": {
-      url: "https://alfajores-forno.celo-testnet.org",
-      chainId: chainIds.testnet,
-      accounts: { mnemonic: mnemonic() },
-      saveDeployments: true,
-      tags: ["alfajores", "staging"],
-      timeout: 100000000,
-    },
-    celo: {
-      url: "http://127.0.0.1:1248",
-      chainId: chainIds.mainnet,
-      saveDeployments: true,
-      tags: ["production", "mainnet"],
-      timeout: 100000000,
-    },
   },
   solidity: {
     compilers: [
-      { version: "0.8.9" },
-      { version: "0.8.0" },
-      { version: "0.8.7", settings: {} },
-      {
-        version: "0.5.13",
-        settings: {
-          evmVersion: "istanbul",
-        },
-      },
-      {
-        version: "0.6.11",
-        settings: {},
-      },
-      {
-        version: "0.7.6",
-        settings: {},
-      },
+      { version: "0.8.17" },
     ],
   },
   namedAccounts: {

@@ -10,3 +10,7 @@ node_modules
 artifacts
 
 types
+
+.env
+
+deployments/localhost

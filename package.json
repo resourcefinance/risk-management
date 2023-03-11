@@ -30,6 +30,7 @@
     "@openzeppelin/hardhat-upgrades": "^1.8.2",
     "@tenderly/hardhat-tenderly": "^1.0.10",
     "chalk": "^4.1.0",
+    "dotenv": "^16.0.3",
     "ethereum-waffle": "^3.1.1",
     "ethers": "^5.4.4",
     "fs-extra": "^10.0.0",

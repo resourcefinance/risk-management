@@ -31,8 +31,7 @@ contract RiskManagementTest is Test {
         creditToken = new MockERC20(0, "Credit Token", "CRD");
         // deploy riskOracle
         riskOracle = new RiskOracle();
-        riskOracle.initialize();
-        // deploy riskManager
+        riskOracle.initialize(deployer);
         // deploy reservePool
         reservePool = new ReservePool();
         reservePool.initialize(

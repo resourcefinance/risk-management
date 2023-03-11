@@ -9,4 +9,10 @@ interface IRiskOracle {
     function reserveConversionRateOf(address creditToken) external view returns (uint256);
     /// @dev used to specify the precision for point based calculations.
     function SCALING_FACTOR() external view returns (uint256);
+
+    /* ========== EVENTS ========== */
+
+    event BaseFeeRateUpdated(address creditToken, uint256 baseFeeRate);
+    event ConversionRateUpdated(address creditToken, uint256 conversionRate);
+    event OperatorUpdated(address operator);
 }
