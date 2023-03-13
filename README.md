@@ -44,7 +44,7 @@ The following diagram depicts how **Stable Credit** networks interact with the *
 
 This project uses [Foundry](https://github.com/foundry-rs/foundry) as the development framework and [Hardhat](https://github.com/NomicFoundation/hardhat) for the deployment framework.
 
-####Dependencies
+#### Dependencies
 
 ```
 yarn install
@@ -54,19 +54,19 @@ yarn install
 forge install
 ```
 
-####Compilation
+#### Compilation
 
 ```bash
 forge build
 ```
 
-####Testing
+#### Testing
 
 ```bash
 forge test
 ```
 
-####Deploy
+#### Deploy
 
 ```bash
 yarn deploy
